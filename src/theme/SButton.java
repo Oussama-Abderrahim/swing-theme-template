@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
@@ -20,24 +19,22 @@ public class SButton extends JButton{
     private Color hoverBg = null;
     private Color borderColor = null;
 
+    private Icon icon = null;
+
     public SButton(String text) {
         super(text);
 
         this.setText(text);
-        this.setBgColor(this.bg);
+        setFocusPainted(false);
         setFont(Theme.BTN_DEFAULT_FONT);
+
+
+        this.setBgColor(this.bg);
+
         this.setBorder(new CompoundBorder(BorderFactory.createLineBorder(borderColor),
                 new EmptyBorder(Theme.LABELED_MARGIN, 0, Theme.LABELED_MARGIN, 0)));
 
-        this.setPreferredSize(new Dimension(
-                Theme.BTN_DEFAULT_WIDTH, Theme.BTN_DEFAULT_HEIGHT)
-        );
-        this.setMinimumSize(new Dimension(
-                Theme.BTN_DEFAULT_WIDTH, Theme.BTN_DEFAULT_HEIGHT)
-        );
-        this.setMaximumSize(new Dimension(
-                Theme.BTN_DEFAULT_WIDTH*2, Theme.BTN_DEFAULT_HEIGHT)
-        );
+        setSize(Theme.BTN_DEFAULT_WIDTH, Theme.BTN_DEFAULT_HEIGHT);
 
         this.setForeground(Theme.BTN_DEFAULT_TEXT_COLOR);
 
@@ -59,15 +56,38 @@ public class SButton extends JButton{
             @Override
             public void mouseEntered(MouseEvent me) {
                 self.setBackground(hoverBg);
+                self.setForeground(Theme.BTN_DEFAULT_TEXT_HOVER_COLOR);
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
                 self.setBackground(bg);
+                self.setForeground(Theme.BTN_DEFAULT_TEXT_COLOR);
             }
         });
+
     }
 
+    @Override
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
+        this.setPreferredSize(new Dimension(
+                width, height
+        ));
+        this.setMinimumSize(new Dimension(
+                width, height
+        ));
+        this.setMaximumSize(new Dimension(
+                width*2, height
+        ));
+    }
+
+    public void setIcon(ImageIcon img)
+    {
+        super.setIcon(img);
+        setVerticalTextPosition(SwingConstants.BOTTOM);
+        setHorizontalTextPosition(SwingConstants.CENTER);
+    }
     public void setBgColor(Color background) {
         this.bg = background;
         this.hoverBg = calcHoverBgColor(bg);
