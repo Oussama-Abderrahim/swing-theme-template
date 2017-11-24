@@ -1,4 +1,5 @@
 import theme.SButton;
+import theme.SLabel;
 import theme.SPanel;
 import theme.Theme;
 
@@ -13,8 +14,14 @@ public class MainFrame extends JFrame
     {
         initWindow();
 
-        contentPane.setLayout(new FlowLayout());
-        contentPane.add(new SButton("Look Awesome"));
+        contentPane.setLayout(new BorderLayout());
+        SPanel topPanel = new SPanel();
+        topPanel.add(new SButton("Look Awesome"));
+        contentPane.add(topPanel, BorderLayout.NORTH);
+
+        SLabel testLabel = new SLabel("My custom swing template");
+
+        contentPane.add(testLabel, BorderLayout.CENTER);
 
     }
 
